@@ -136,11 +136,10 @@ def main():
     records = get_airtable_records(airtable_api_key, base_id, source_table_name)
     print(f"Fetched {len(records)} records from Airtable.")
 
-    filtered_records = [record for record in records if 'N' <= record['id'][-1] <= 'Z']
+    filtered_records = [record for record in records if record['id'][-1] == '0']
     print(f"Filtered to {len(filtered_records)} records based on ID condition.")
 
-    
-    for record in records:
+    for record in filtered_records:
         fields = record.get('fields', {})
         github_url = fields.get('GitHub', '')
         status = fields.get('Status', '')
@@ -178,3 +177,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+message.txt
+8 KB
