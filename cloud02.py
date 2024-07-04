@@ -77,7 +77,7 @@ class GitHubApiHandler:
         return None
 
 def get_airtable_records(api_key, base_id, table_name):
-    url = f'https://api.airtable.com/v0/{base_id}/{table_name}?filterByFormula=AND(NOT({{GitHub}} = ""), {{Status}} = "Run")'
+    url = f'https://api.airtable.com/v0/{base_id}/{table_name}?filterByFormula=AND(NOT({{GitHub}} = ""), {{Status}} = "Run E")'
     headers = {
         'Authorization': f'Bearer {api_key}',
     }
@@ -136,9 +136,6 @@ def main():
     records = get_airtable_records(airtable_api_key, base_id, source_table_name)
     print(f"Fetched {len(records)} records from Airtable.")
 
-    filtered_records = [record for record in records if record['id'][-1] == '0']
-    print(f"Filtered to {len(filtered_records)} records based on ID condition.")
-
     for record in filtered_records:
         fields = record.get('fields', {})
         github_url = fields.get('GitHub', '')
@@ -146,7 +143,7 @@ def main():
 
         print(f"Record ID: {record['id']}, GitHub URL: {github_url}, Status: {status}")
 
-        if github_url and status == 'Run':
+        if github_url and status == 'Run E':
             print(f"Setting record {record['id']} to 'Running'")
             update_airtable_record(airtable_api_key, base_id, source_table_name, record['id'], {'Status': 'Running'})
             
