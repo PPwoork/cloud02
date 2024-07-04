@@ -136,7 +136,7 @@ def main():
     records = get_airtable_records(airtable_api_key, base_id, source_table_name)
     print(f"Fetched {len(records)} records from Airtable.")
 
-    for record in filtered_records:
+    for record in records:
         fields = record.get('fields', {})
         github_url = fields.get('GitHub', '')
         status = fields.get('Status', '')
@@ -174,5 +174,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-message.txt
-8 KB
